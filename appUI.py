@@ -35,11 +35,13 @@ def delete():
 
 
 def mostrar_gastado():
-    pass
+    Captura.sumPrecios()
+    textbox_gastado.insert(customtkinter.END,
+                           text=f'{db.gastos.distinct("gastado")}euros'.replace('[', '').replace(']', ' '))
 
 
 
-# config. windows
+# config. window
 root = customtkinter.CTk()
 root.title("LotoApp")
 root.iconbitmap('@logo.xbm')
@@ -57,8 +59,10 @@ textbox_gastado = customtkinter.CTkTextbox(side_frame, width=150, height=20,
                                            fg_color="#F4F6F7")
 textbox_gastado.grid(row=1, column=0, padx=10, pady=(0, 20))
 
-textbox_gastado.insert(customtkinter.END,
-                       text=f'{db.gastos.distinct("gastado")}euros'.replace('[', '').replace(']', ' '))
+# textbox_gastado.insert(customtkinter.END,
+#                       text=f'{db.gastos.distinct("gastado")}euros'.replace('[', '').replace(']', ' '))
+
+textbox_gastado.after(1000, mostrar_gastado())
 
 gastado_label = customtkinter.CTkLabel(side_frame, text="GASTADO", text_color="#17202A")
 gastado_label.grid(row=0, column=0)

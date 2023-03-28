@@ -96,7 +96,7 @@ class Captura:
                                    "fecha insercion": datetime.utcnow()}
             return boleto_euromillones
 
-       # if 'P=6' or 'P=5' in myData[1]:
+        # if 'P=6' or 'P=5' in myData[1]:
         #    boleto = loteria()
         if 'P=1' in myData[1]:
             boleto = primitiva()
