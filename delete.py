@@ -10,5 +10,5 @@ class Delete:
         db.toto.delete_one({"sn": "143060010754786009"})
     @staticmethod
     def deleteGastado():
-        db.gastos.delete_one({})
+        db.gastos.delete_many({})
 

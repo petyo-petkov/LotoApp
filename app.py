@@ -68,15 +68,14 @@ class Captura:
             return boleto_bonoloto
 
         def loteria():
-            if myData[1] == 'P=5':
-                precio_boleto = 6
-            if myData[1] == 'P=6':
-                precio_boleto = 3
-
+            if 'P=5' in myData:
+                precio = 15
+            if 'P=6' in myData:
+                precio = 3
             boleto_loteria = {"sn": myData[0],
                               "numero": myData[0][9:14],
                               "fecha": myData[0][:2],
-                              "precio": precio_boleto,
+                              "precio": precio,
                               "tipo": "Loteria",
                               "fecha insercion": datetime.utcnow()}
             return boleto_loteria
@@ -95,9 +94,10 @@ class Captura:
                                    "tipo": "Euromillones",
                                    "fecha insercion": datetime.utcnow()}
             return boleto_euromillones
-
-        # if 'P=6' or 'P=5' in myData[1]:
-        #    boleto = loteria()
+        if 'P=5' in myData[1]:
+            boleto = loteria()
+        if 'P=6' in myData[1]:
+            boleto = loteria()
         if 'P=1' in myData[1]:
             boleto = primitiva()
         if 'P=7' in myData[1]:
@@ -116,8 +116,12 @@ class Captura:
     @staticmethod
     def sumPrecios() -> None:
         # sumando los precios de los boletos
-        precios = db.toto.distinct("precio")
-        suma = sum(precios)
+        cursor = db.toto.find({})
+        suma = 0
+        for i in cursor:
+            precios = float(i["precio"])
+            suma = suma + precios
+
         gastado = {"gastado": suma,
                    "date": datetime.utcnow()}
 
