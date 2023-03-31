@@ -39,7 +39,7 @@ def delete():
 
 
 def ver(n):
-    lst = [['tipo', 'precio', 'fecha']]
+    lst = [['TIPO', 'PRECIO', 'FECHA']]
     cursor = db.toto.find({}, {'_id': False})
     for datos in cursor:
         tipo_db = str(datos['tipo'])
@@ -49,7 +49,8 @@ def ver(n):
 
     for i in range(len(lst)):
         for j in range(len(lst[0])):
-            mgrid = customtkinter.CTkEntry(text_frame, width=155, height=30)
+            mgrid = customtkinter.CTkEntry(text_frame, width=155, height=28, text_color='black', fg_color='#F4F6F7',
+                                           corner_radius=4)
             mgrid.insert(customtkinter.END, lst[i][j])
             mgrid.grid(row=i + 0, column=j + 1)
     if n == 1:
@@ -79,7 +80,6 @@ side_frame.grid_rowconfigure(4, weight=1)
 text_frame = customtkinter.CTkFrame(root, width=460, height=340)
 text_frame.grid(row=0, column=1, rowspan=9, columnspan=3, padx=10, pady=10, sticky="nsew")
 ver(0)
-
 
 # textbox ganado-gastado
 textbox_gastado = customtkinter.CTkTextbox(side_frame, width=150, height=20,
@@ -117,6 +117,5 @@ button_salir.grid(row=8, column=0, padx=10, pady=10, sticky="nsew")
 # set default
 textbox_gastado.configure(state="disabled")
 textbox_ganado.configure(state="disabled")
-
 
 root.mainloop()
