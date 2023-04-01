@@ -10,12 +10,15 @@ from delete import Delete
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("green")
 
+gastado = f'{db.gastos.distinct("gastado")} euros'.replace('[', '').replace(']', '')
+
 
 def add():
     Captura.captura()
     Captura.sumPrecios()
     ver(1)
     ver(0)
+    mostrar_gastado()
 
 
 # def mostrar_boletos():
@@ -36,6 +39,7 @@ def delete():
         Delete.deleteGastado()
     ver(1)
     ver(0)
+    mostrar_gastado()
 
 
 def ver(n):
@@ -61,8 +65,11 @@ def ver(n):
 
 def mostrar_gastado():
     Captura.sumPrecios()
-    textbox_gastado.insert(customtkinter.END,
-                           text=f'{db.gastos.distinct("gastado")} euros'.replace('[', '').replace(']', ''))
+    campo_gastado = customtkinter.CTkEntry(side_frame, width=150, height=30,
+                                           text_color="black", fg_color="#F4F6F7")
+    campo_gastado.grid(row=1, column=0, padx=10, pady=(0, 20))
+    campo_gastado.insert(customtkinter.END,
+                         f'{db.gastos.distinct("gastado")} euros'.replace('[', '').replace(']', ''))
 
 
 # config. window
@@ -80,12 +87,12 @@ side_frame.grid_rowconfigure(4, weight=1)
 text_frame = customtkinter.CTkFrame(root, width=460, height=340)
 text_frame.grid(row=0, column=1, rowspan=9, columnspan=3, padx=10, pady=10, sticky="nsew")
 ver(0)
-
+mostrar_gastado()
 # textbox ganado-gastado
-textbox_gastado = customtkinter.CTkTextbox(side_frame, width=150, height=20,
-                                           activate_scrollbars=False, text_color="black", fg_color="#F4F6F7")
-textbox_gastado.grid(row=1, column=0, padx=10, pady=(0, 20))
-textbox_gastado.after(1000, mostrar_gastado())
+# textbox_gastado = customtkinter.CTkEntry(side_frame, width=150, height=30,
+#                                            text_color="black", fg_color="#F4F6F7")
+# textbox_gastado.grid(row=1, column=0, padx=10, pady=(0, 20))
+# textbox_gastado.after(1000, mostrar_gastado())
 
 gastado_label = customtkinter.CTkLabel(side_frame, text="GASTADO", text_color="#17202A")
 gastado_label.grid(row=0, column=0)
@@ -115,7 +122,7 @@ button_salir = customtkinter.CTkButton(root, width=100, height=30, text="SALIR",
 button_salir.grid(row=8, column=0, padx=10, pady=10, sticky="nsew")
 
 # set default
-textbox_gastado.configure(state="disabled")
+# textbox_gastado.configure(state="disabled")
 textbox_ganado.configure(state="disabled")
 
 root.mainloop()
