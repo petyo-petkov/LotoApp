@@ -65,7 +65,7 @@ def ver(n):
 
 def mostrar_gastado():
     Captura.sumPrecios()
-    campo_gastado = customtkinter.CTkEntry(side_frame, width=150, height=30,
+    campo_gastado = customtkinter.CTkEntry(side_frame, width=150, height=32, corner_radius=4,
                                            text_color="black", fg_color="#F4F6F7")
     campo_gastado.grid(row=1, column=0, padx=10, pady=(0, 20))
     campo_gastado.insert(customtkinter.END,
@@ -97,8 +97,8 @@ mostrar_gastado()
 gastado_label = customtkinter.CTkLabel(side_frame, text="GASTADO", text_color="#17202A")
 gastado_label.grid(row=0, column=0)
 
-textbox_ganado = customtkinter.CTkTextbox(side_frame, width=150, height=20,
-                                          activate_scrollbars=False, text_color="black", fg_color="#F4F6F7")
+textbox_ganado = customtkinter.CTkEntry(side_frame, width=150, height=32, corner_radius=4,
+                                         text_color="black", fg_color="#F4F6F7")
 textbox_ganado.grid(row=3, column=0, padx=10, pady=(0, 20), sticky="n")
 ganado_label = customtkinter.CTkLabel(side_frame, text="GANADO", text_color="#17202A")
 ganado_label.grid(row=2, column=0)
@@ -122,7 +122,6 @@ button_salir = customtkinter.CTkButton(root, width=100, height=30, text="SALIR",
 button_salir.grid(row=8, column=0, padx=10, pady=10, sticky="nsew")
 
 # set default
-# textbox_gastado.configure(state="disabled")
-textbox_ganado.configure(state="disabled")
+textbox_ganado.configure(state="normal")
 
 root.mainloop()
