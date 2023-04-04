@@ -1,6 +1,4 @@
-# import json
-# import tkinter
-# from bson import json_util
+
 from tkinter import messagebox
 import customtkinter
 import db
@@ -10,20 +8,20 @@ from delete import Delete
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("green")
 
-gastado = f'{db.gastos.distinct("gastado")} euros'.replace('[', '').replace(']', '')
 
-
-def add():
-    Captura.captura()
-    Captura.sumPrecios()
-    ver(1)
-    ver(0)
+def add_boleto():
+    Captura.captur_qr_code()
+    Captura.sum_precios()
+    info_boletos(1)
+    info_boletos(0)
     mostrar_gastado()
 
 
-# def mostrar_boletos():
-#    cursor = db.toto.find({}, {'_id': False})
-#    return str(json.dumps(list(cursor), default=json_util.default, indent=1))
+""" mostrar los boletos como json 
+    def mostrar_boletos():
+       cursor = db.toto.find({}, {'_id': False})
+    return str(json.dumps(list(cursor), default=json_util.default, indent=1))
+"""
 
 
 def cancel():
@@ -37,12 +35,12 @@ def delete():
     if yes:
         Delete.deleteAll()
         Delete.deleteGastado()
-    ver(1)
-    ver(0)
+    info_boletos(1)
+    info_boletos(0)
     mostrar_gastado()
 
 
-def ver(n):
+def info_boletos(n):
     lst = [['TIPO', 'PRECIO', 'FECHA']]
     cursor = db.toto.find({}, {'_id': False})
     for datos in cursor:
@@ -64,7 +62,7 @@ def ver(n):
 
 
 def mostrar_gastado():
-    Captura.sumPrecios()
+    Captura.sum_precios()
     campo_gastado = customtkinter.CTkEntry(side_frame, width=150, height=32, corner_radius=4,
                                            text_color="black", fg_color="#F4F6F7")
     campo_gastado.grid(row=1, column=0, padx=10, pady=(0, 20))
@@ -86,7 +84,7 @@ side_frame.grid_rowconfigure(4, weight=1)
 
 text_frame = customtkinter.CTkFrame(root, width=460, height=340)
 text_frame.grid(row=0, column=1, rowspan=9, columnspan=3, padx=10, pady=10, sticky="nsew")
-ver(0)
+info_boletos(0)
 mostrar_gastado()
 # textbox ganado-gastado
 # textbox_gastado = customtkinter.CTkEntry(side_frame, width=150, height=30,
@@ -98,7 +96,7 @@ gastado_label = customtkinter.CTkLabel(side_frame, text="GASTADO", text_color="#
 gastado_label.grid(row=0, column=0)
 
 textbox_ganado = customtkinter.CTkEntry(side_frame, width=150, height=32, corner_radius=4,
-                                         text_color="black", fg_color="#F4F6F7")
+                                        text_color="black", fg_color="#F4F6F7")
 textbox_ganado.grid(row=3, column=0, padx=10, pady=(0, 20), sticky="n")
 ganado_label = customtkinter.CTkLabel(side_frame, text="GANADO", text_color="#17202A")
 ganado_label.grid(row=2, column=0)
@@ -109,7 +107,7 @@ button_new = customtkinter.CTkButton(root, width=100, height=30, text="NUEVO", t
 button_new.grid(row=4, column=0, padx=10, pady=10, sticky="nsew")
 
 button_add = customtkinter.CTkButton(root, width=100, height=30, text="AÑADIR", text_color="#17202A",
-                                     fg_color="#27AE60", hover_color="#229954", command=add)
+                                     fg_color="#27AE60", hover_color="#229954", command=add_boleto)
 button_add.grid(row=5, column=0, padx=10, pady=10, sticky="nsew")
 
 button_borrar = customtkinter.CTkButton(root, width=100, height=30, text="BORRAR", text_color="#17202A",

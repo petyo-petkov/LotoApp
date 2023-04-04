@@ -7,21 +7,21 @@ from datetime import datetime
 class Captura:
 
     @staticmethod
-    def captura():
+    def captur_qr_code():
         cap = cv2.VideoCapture(0)
         success = True
         while success:
             # leyendo y decodificando la img.
             success, img = cap.read()
             for barcode in decode(img):
-                myData = barcode.data.decode('utf-8')
-                myData = myData.split(';')
+                qr_data = barcode.data.decode('utf-8')
+                qr_data = qr_data.split(';')
                 # preparando eldata para los decimos de la loteria
-                if len(myData) == 1:
-                    myData = f'{myData[0][2:]} P={myData[0][0]} {0} {0} {0} {0} {0} {0} {0}'
-                    myData = myData.split(' ')
+                if len(qr_data) == 1:
+                    qr_data = f'{qr_data[0][2:]} P={qr_data[0][0]} {0} {0} {0} {0} {0} {0} {0}'
+                    qr_data = qr_data.split(' ')
 
-                print(myData)
+                print(qr_data)
                 success = False
 
             # mostrando los resultados
@@ -34,79 +34,80 @@ class Captura:
 
         # BOLETOS
         def primitiva():
-            combinaciones = myData[4]
+            combinaciones = qr_data[4]
             combinaciones = combinaciones.split('.')
             del combinaciones[0]
-            precio = int((1 * len(combinaciones) * int(myData[2][-1])))
+            precio = int((1 * len(combinaciones) * int(qr_data[2][-1])))
 
-            boleto_primitiva = {"sn": myData[0],
-                                "fecha": myData[2][5:12],
+            boleto_primitiva = {"sn": qr_data[0],
+                                "fecha": qr_data[2][5:12],
                                 "combinaciones": combinaciones,
-                                "reintegro": myData[6],
-                                "joker": myData[7],
-                                "dias_jugados": myData[2][-1],
+                                "reintegro": qr_data[6],
+                                "joker": qr_data[7],
+                                "dias_jugados": qr_data[2][-1],
                                 "precio": precio,
                                 "tipo": "Primitiva",
                                 "fecha insercion": datetime.utcnow()}
             return boleto_primitiva
 
         def bonoloto():
-            combinaciones = myData[4]
+            combinaciones = qr_data[4]
             combinaciones = combinaciones.split('.')
             del combinaciones[0]
-            precio = float((0.5 * len(combinaciones) * int(myData[2][-1])))
+            precio = float((0.5 * len(combinaciones) * int(qr_data[2][-1])))
 
-            boleto_bonoloto = {"sn": myData[0],
-                               "fecha": myData[2][5:12],
+            boleto_bonoloto = {"sn": qr_data[0],
+                               "fecha": qr_data[2][5:12],
                                "combinaciones": combinaciones,
-                               "reintegro": myData[6],
-                               "joker": myData[7],
-                               "dias_jugados": myData[2][-1],
+                               "reintegro": qr_data[6],
+                               "joker": qr_data[7],
+                               "dias_jugados": qr_data[2][-1],
                                "precio": precio,
                                "tipo": "Bonoloto",
                                "fecha insercion": datetime.utcnow()}
             return boleto_bonoloto
 
         def loteria():
-            if 'P=5' in myData:
+            if 'P=5' in qr_data:
                 precio = 15
-            if 'P=6' in myData:
+            if 'P=6' in qr_data:
                 precio = 3
-            boleto_loteria = {"sn": myData[0],
-                              "numero": myData[0][9:14],
-                              "fecha": myData[0][:2],
+            boleto_loteria = {"sn": qr_data[0],
+                              "numero": qr_data[0][9:14],
+                              "fecha": qr_data[0][:2],
                               "precio": precio,
                               "tipo": "Loteria",
                               "fecha insercion": datetime.utcnow()}
             return boleto_loteria
 
         def euromillon():
-            combinaciones = myData[4]
+            combinaciones = qr_data[4]
             combinaciones = combinaciones.split('.')
             del combinaciones[0]
 
-            boleto_euromillones = {"sn": myData[0],
-                                   "fecha": myData[2][5:12],
+            boleto_euromillones = {"sn": qr_data[0],
+                                   "fecha": qr_data[2][5:12],
                                    "combinaciones": combinaciones,
-                                   "num_millon": myData[6][21:29],
-                                   "dias_jugados": myData[2][-1],
-                                   "precio": (2.5 * len(combinaciones)) * int(myData[2][-1]),
+                                   "num_millon": qr_data[6][21:29],
+                                   "dias_jugados": qr_data[2][-1],
+                                   "precio": (2.5 * len(combinaciones)) * int(qr_data[2][-1]),
                                    "tipo": "Euromillones",
                                    "fecha insercion": datetime.utcnow()}
             return boleto_euromillones
-        if 'P=5' in myData[1]:
+
+        if 'P=5' in qr_data[1]:
             boleto = loteria()
-        if 'P=6' in myData[1]:
+        if 'P=6' in qr_data[1]:
             boleto = loteria()
-        if 'P=1' in myData[1]:
+        if 'P=1' in qr_data[1]:
             boleto = primitiva()
-        if 'P=7' in myData[1]:
+        if 'P=7' in qr_data[1]:
             boleto = euromillon()
-        if 'P=2' in myData[1]:
+        if 'P=2' in qr_data[1]:
             boleto = bonoloto()
 
         # comprobando si el boletos existe en la DB y lo añadimos en caso que no.
-        if myData[0] not in db.toto.distinct("sn"):
+        if qr_data[0] not in db.toto.distinct("sn"):
             db.toto.insert_one(boleto)
             print('Boleto añadido correctamente')
         else:
@@ -114,7 +115,7 @@ class Captura:
 
     # creando documento (con la suma de los boletos) en la DB
     @staticmethod
-    def sumPrecios() -> None:
+    def sum_precios() -> None:
         # sumando los precios de los boletos
         cursor = db.toto.find({})
         suma = 0

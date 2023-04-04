@@ -1,5 +1,5 @@
 import db
-import customtkinter
+import tkinter
 
 n = db.toto.count_documents({})
 
@@ -15,21 +15,26 @@ def ver():
 
     for i in range(len(lst)):
         for j in range(len(lst[0])):
-            mgrid = customtkinter.CTkEntry(frame, width=150, height=20)
+            mgrid = tkinter.Entry(frame, background='black', relief='ridge', fg='white')
             #mgrid._values = mgrid.get(), i
-            mgrid.insert(customtkinter.END, lst[i][j])
+            mgrid.insert(tkinter.END, lst[i][j])
             mgrid.grid(row=i+7, column=j+6)
 
 
 
 
-root = customtkinter.CTk()
+root = tkinter.Tk()
 root.geometry('500x320')
 
-frame = customtkinter.CTkFrame(root)
+
+frame = tkinter.Frame(root, background='black', height=300, width=150)
+frame.pack()
 frame.after(1000, ver())
 
-frame.grid()
+button1 = tkinter.Button(root, text='ADD')
+button1.pack()
 
+box = tkinter.Checkbutton(root)
+box.pack()
 
 root.mainloop()
