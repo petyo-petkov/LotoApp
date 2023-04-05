@@ -1,4 +1,3 @@
-
 from tkinter import messagebox
 import customtkinter
 import db
@@ -91,9 +90,9 @@ mostrar_gastado()
 gastado_label = customtkinter.CTkLabel(side_frame, text="GASTADO", text_color="#17202A")
 gastado_label.grid(row=0, column=0)
 
-textbox_ganado = customtkinter.CTkEntry(side_frame, width=100, height=32, corner_radius=4,
+textentry_ganado = customtkinter.CTkEntry(side_frame, width=100, height=32, corner_radius=4,
                                         text_color="black", fg_color="#F4F6F7")
-textbox_ganado.grid(row=3, column=0, padx=10, pady=(0, 20), sticky="n")
+textentry_ganado.grid(row=3, column=0, padx=10, pady=(0, 20), sticky="n")
 ganado_label = customtkinter.CTkLabel(side_frame, text="GANADO", text_color="#17202A")
 ganado_label.grid(row=2, column=0)
 
@@ -115,7 +114,8 @@ button_salir = customtkinter.CTkButton(root, width=100, height=30, text="SALIR",
                                        command=cancel)
 button_salir.grid(row=8, column=0, padx=5, pady=5, sticky="nsew")
 
-# set default
-textbox_ganado.configure(state="normal")
+# app version label
+app_ver = customtkinter.CTkLabel(root, text='LotoApp v.1.0', text_color='white', font=('Roboto', 10))
+app_ver.grid(row=9, column=3, sticky='se', padx=5)
 
 root.mainloop()
