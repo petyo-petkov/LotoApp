@@ -40,14 +40,14 @@ def delete():
 
 
 def info_boletos(n):
-    lst = [['ID', 'TIPO', 'PRECIO', 'FECHA']]
+    lst = [['NUMERO DE SERIE', 'TIPO', 'PRECIO', 'FECHA']]
     cursor = db.toto.find({})
     for datos in cursor:
-        id_db = str(datos['_id'])
+        sn_db = str(datos['sn'][-10:])
         tipo_db = str(datos['tipo'])
         precio_db = f" {datos['precio']} \N{euro sign}"  # " \N{euro sign} " - muestra el signo del euro
         fecha_db = str(datos['fecha'])
-        lst.append([id_db, tipo_db, precio_db, fecha_db])
+        lst.append([sn_db, tipo_db, precio_db, fecha_db])
 
     for i in range(len(lst)):
         for j in range(len(lst[0])):
