@@ -82,7 +82,7 @@ side_frame.grid(row=0, column=0, rowspan=2, padx=5, pady=5, sticky="nsew")
 side_frame.grid_rowconfigure(4, weight=1)
 
 # config. text_frame
-text_frame = customtkinter.CTkFrame(root, width=460, height=340)
+text_frame = customtkinter.CTkScrollableFrame(root, width=640, height=340)
 text_frame.grid(row=0, column=1, rowspan=9, columnspan=3, padx=5, pady=5, sticky="nsew")
 info_boletos(0)
 mostrar_gastado()
