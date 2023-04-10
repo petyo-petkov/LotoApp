@@ -39,7 +39,7 @@ def delete():
     info_boletos(0)
     mostrar_gastado()
 
-
+# guarda los datos de la casilla en una variable.....
 def get_val(event):
     dato = event.widget._values
     print(dato)
@@ -60,7 +60,7 @@ def info_boletos(n):
             mgrid = tkinter.Entry(text_frame, foreground='#F4F6F7', fg='black', borderwidth=0,
                                   highlightbackground='black')
             mgrid.insert(tkinter.END, lst[i][j])
-            mgrid._values = mgrid.get()
+            mgrid._values = mgrid.get()                          # guarda el valor de la casilla sleccionada
             mgrid.grid(row=i + 0, column=j + 1, pady=2, padx=0)
             mgrid.bind('<Button-1>', get_val)
     if n == 1:
