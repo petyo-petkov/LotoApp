@@ -39,6 +39,7 @@ def delete():
     info_boletos(0)
     mostrar_gastado()
 
+
 # guarda los datos de la casilla en una variable.....
 def get_val(event):
     dato = event.widget._values
@@ -60,8 +61,8 @@ def info_boletos(n):
             mgrid = tkinter.Entry(text_frame, foreground='#F4F6F7', fg='black', borderwidth=0,
                                   highlightbackground='black')
             mgrid.insert(tkinter.END, lst[i][j])
-            mgrid._values = mgrid.get()                          # guarda el valor de la casilla sleccionada
-            mgrid.grid(row=i + 0, column=j + 1, pady=2, padx=0)
+            mgrid._values = mgrid.get()                                    # guarda el valor de la casilla sleccionada
+            mgrid.grid(row=i + 0, column=j + 1, pady=2, padx=0, ipady=3)
             mgrid.bind('<Button-1>', get_val)
     if n == 1:
         for label in text_frame.grid_slaves():
@@ -73,7 +74,7 @@ def mostrar_gastado():
     Captura.sum_precios()
     campo_gastado = customtkinter.CTkEntry(side_frame, width=100, height=32, corner_radius=4,
                                            text_color="black", fg_color="#F4F6F7")
-    campo_gastado.grid(row=1, column=0, padx=10, pady=(0, 20))
+    campo_gastado.grid(row=1, column=0, padx=18, pady=(0, 20))
     campo_gastado.insert(customtkinter.END,
                          f'{db.gastos.distinct("gastado")} \N{euro sign}'.replace('[', '').replace(']', ''))
 
@@ -81,17 +82,17 @@ def mostrar_gastado():
 # config. window
 root = customtkinter.CTk()
 root.title("LotoApp")
-root.geometry("800x420")
+root.geometry("840x420")
 root.resizable(width=False, height=False)
 
 # config. side_frame
-side_frame = customtkinter.CTkFrame(root, width=150, height=340, fg_color="#F7DC6F")
+side_frame = customtkinter.CTkFrame(root, width=120, height=340, fg_color="#F7DC6F")
 side_frame.grid(row=0, column=0, rowspan=2, padx=5, pady=5, sticky="nsew")
-side_frame.grid_rowconfigure(4, weight=1)
+side_frame.grid_rowconfigure(4, weight=0)
 
 # config. text_frame
-text_frame = customtkinter.CTkScrollableFrame(root, width=640, height=340)
-text_frame.grid(row=0, column=1, rowspan=9, columnspan=3, padx=5, pady=5)
+text_frame = customtkinter.CTkScrollableFrame(root, width=650, height=340)
+text_frame.grid(row=0, column=1, rowspan=9, columnspan=3, padx=10, pady=5)
 info_boletos(0)
 mostrar_gastado()
 
@@ -100,24 +101,25 @@ gastado_label.grid(row=0, column=0)
 
 textentry_ganado = customtkinter.CTkEntry(side_frame, width=100, height=32, corner_radius=4,
                                           text_color="black", fg_color="#F4F6F7")
-textentry_ganado.grid(row=3, column=0, padx=10, pady=(0, 20), sticky="n")
+textentry_ganado.grid(row=3, column=0, pady=(0, 20))
+
 ganado_label = customtkinter.CTkLabel(side_frame, text="GANADO", text_color="#17202A")
 ganado_label.grid(row=2, column=0)
 
 # botones
-button_new = customtkinter.CTkButton(root, width=100, height=30, text="NUEVO", text_color="#17202A",
+button_new = customtkinter.CTkButton(root, width=120, height=30, text="NUEVO", text_color="#17202A",
                                      fg_color="#27AE60", hover_color="#229954")
 button_new.grid(row=4, column=0, padx=5, pady=5, sticky="new")
 
-button_add = customtkinter.CTkButton(root, width=100, height=30, text="AÑADIR", text_color="#17202A",
+button_add = customtkinter.CTkButton(root, width=120, height=30, text="AÑADIR", text_color="#17202A",
                                      fg_color="#27AE60", hover_color="#229954", command=add_boleto)
 button_add.grid(row=5, column=0, padx=5, pady=5, sticky="new")
 
-button_borrar = customtkinter.CTkButton(root, width=100, height=30, text="BORRAR", text_color="#17202A",
+button_borrar = customtkinter.CTkButton(root, width=120, height=30, text="BORRAR", text_color="#17202A",
                                         fg_color="#E74C3C", hover_color="#FE1800", command=delete)
 button_borrar.grid(row=6, column=0, padx=5, pady=5, sticky="new")
 
-button_salir = customtkinter.CTkButton(root, width=100, height=30, text="SALIR",
+button_salir = customtkinter.CTkButton(root, width=120, height=30, text="SALIR",
                                        text_color="#17202A", fg_color="#F4D03F", hover_color="#F1C40F",
                                        command=cancel)
 button_salir.grid(row=8, column=0, padx=5, pady=5, sticky="new")
