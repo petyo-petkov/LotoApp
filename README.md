@@ -1,0 +1,3 @@
+# LotoApp
+
+App para tener la contabilidad de los gastos en loteria....
