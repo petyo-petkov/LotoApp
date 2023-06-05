@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 cliente = MongoClient(
-    "mongodb://localhost:27017"
+    "http://localhost/127.0.0.1"
 )
 
 db = cliente.loto
